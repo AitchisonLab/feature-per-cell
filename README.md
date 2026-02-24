@@ -20,8 +20,11 @@ Neal ML, Shukla N, Mast FD, Farré JC, Pacio TM, Raney-Plourde KE, Prasad S, Sub
 
 
 ## SCOPE
-This program processes microscopy files to quantify the number of subcellular features per yeast cell, cell and feature areas, cytosolic signal intensities outside subcellular features, as well as other biological characteristics. It was originally developed to capture characteristics of peroxisomes, but can be applied to other subcellular structures.
-It expects the input file to include two channels: the first should contain fluoresence microscopy images of GFP-tagged subcellular markers in a Z-stack, the second channel should contain fluorescence images of the same Z-stack but capturing whole cells stained with calcofluor white. 
+This program processes microscopy files to quantify the number of subcellular features per yeast cell, cell and feature areas, cytosolic signal intensities outside subcellular features, as well as other biological characteristics. 
+
+The software was originally named "perox-per-cell", as it was initially developed to capture the characteristics of peroxisomes, but it can be applied to other subcellular structures.
+
+The program expects the input file to include two channels: the first should contain fluoresence microscopy images of GFP-tagged subcellular markers in a Z-stack, the second channel should contain fluorescence images of the same Z-stack but capturing whole cells stained with calcofluor white. 
 
 While the software has primarily been tested using Zeiss Vision Image (.zvi) files, other imaging formats such as TIFF files can also be used. Furthermore, Z-stacks are not required: 2D images can also be used for both channels. 
 
