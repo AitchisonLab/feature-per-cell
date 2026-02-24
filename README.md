@@ -1,9 +1,9 @@
-# perox-per-cell
+# feature-per-cell
 Automated quantification of peroxisome characteristics from fluorescence microscopy images.
 
 [The peer-reviewed paper describing the software is available here.](https://doi.org/10.1093/bioinformatics/btae442.)
 #### Citation:
-Neal ML, Shukla N, Mast FD, Farré JC, Pacio TM, Raney-Plourde KE, Prasad S, Subramani S, Aitchison JD. Automated, image-based quantification of peroxisome characteristics with perox-per-cell. Bioinformatics. 2024 Jul 13;40(7):btae442.
+Neal ML, Shukla N, Mast FD, Farré JC, Pacio TM, Raney-Plourde KE, Prasad S, Subramani S, Aitchison JD. Automated, image-based quantification of peroxisome characteristics with feature-per-cell. Bioinformatics. 2024 Jul 13;40(7):btae442.
 
 
 ## Table of Contents
@@ -43,8 +43,8 @@ If you need help setting the environment variable, [this page](https://www.wikih
 Please keep all program files where they are in the downloaded repository. Otherwise, the program will likely fail to run.
 
 ### On Windows
-1) Download and extract one of the perox-per-cell Windows executable package ZIPs under [Releases](https://github.com/AitchisonLab/perox-per-cell/releases).
-2) Double-click the extracted perox_per_cell.bat file. This will open a command prompt and the perox-per-cell GUI. It may take a few seconds to load.
+1) Download and extract one of the feature-per-cell Windows executable package ZIPs under [Releases](https://github.com/AitchisonLab/feature-per-cell/releases).
+2) Double-click the extracted perox_per_cell.bat file. This will open a command prompt and the feature-per-cell GUI. It may take a few seconds to load.
 3) Select an imaging file to process by pressing the "Select" button. You can choose to batch process all files in the image's folder by checking the "Process all files in directory" checkbutton.
 4) If needed, edit the values for parameters in the GUI
     - The first sets the sensitivity of peroxisome detection (lower is more sensitive). Default is 0.0064.
@@ -56,7 +56,7 @@ Please keep all program files where they are in the downloaded repository. Other
 6) The GUI will close and messages output by the program will appear in the command prompt. You may see warning messages related to TensorFlow but they can be ignored. When the run finishes, the GUI will re-open and another run can be performed. In initial tests, the program takes less than 90 seconds to process one imaging file on a garden variety Windows desktop.
 
 ### On Mac OS X
-Currently, a standalone executable for Mac OS X is not available. Installing the tool on Mac OS X requires setting up two conda environments that are then used to execute Python files in the perox-per-cell repository.
+Currently, a standalone executable for Mac OS X is not available. Installing the tool on Mac OS X requires setting up two conda environments that are then used to execute Python files in the feature-per-cell repository.
 
 The software has not been extensively tested on Mac but the instructions below work for installation on an M1 Silicon machine running OS X 13.6.1, Java JDK 16.0.2 and conda 24.1.2.
 
@@ -64,9 +64,9 @@ We welcome feedback from the community to improve the software's performance on 
 
 Most of this will be done using commands entered in the Terminal app. Open it by going to _Applications > Utilities > Terminal_
 
-1) Download perox-per-cell repository (via `git clone https://github.com/AitchisonLab/perox-per-cell.git`, etc.) and the yeast segmentation weights file
+1) Download feature-per-cell repository (via `git clone https://github.com/AitchisonLab/feature-per-cell.git`, etc.) and the yeast segmentation weights file
 
-   The yeast segmentation weights file (~230 MB) is available [here](https://zenodo.org/record/3598690/files/weights.zip). Download the file so that it is in the main perox-per-cell directory, then unzip the file using 'unzip weights.zip`. This will unzip a folder called "weights" that contains the RCNN weights file deepretina_final.h5.
+   The yeast segmentation weights file (~230 MB) is available [here](https://zenodo.org/record/3598690/files/weights.zip). Download the file so that it is in the main feature-per-cell directory, then unzip the file using 'unzip weights.zip`. This will unzip a folder called "weights" that contains the RCNN weights file deepretina_final.h5.
 
 2) Ensure that Java is installed on your system and that the environment variable `JAVA_HOME` is set and points to a valid Java installation. You can check whether Java is installed by entering the command `java -version` in a terminal. If no version information is shown, Java is probably not installed. Download instructions are [here](https://www.java.com/en/download/apple.jsp).
    
@@ -83,7 +83,7 @@ Most of this will be done using commands entered in the Terminal app. Open it by
  3) Next, ensure that Conda is installed. Conda is a tool for managing virtual Python environments. See [this website](https://docs.conda.io/projects/conda/en/stable/user-guide/install/index.html) for instructions on installing conda. Be sure to download the version that works for your processor (x86_64 or M1 Silicon)
  4) Using Conda, set up two virtual Python environments - one is used for segmenting peroxisomes, the other for cells.
     
-    First, set up the environment for segmenting peroxisomes. Using the Terminal, `cd` to your downloaded perox-per-cell repository directory using the command
+    First, set up the environment for segmenting peroxisomes. Using the Terminal, `cd` to your downloaded feature-per-cell repository directory using the command
     
     `cd [path to downloaded repository]`
     
@@ -103,15 +103,15 @@ Most of this will be done using commands entered in the Terminal app. Open it by
 
     `conda info | grep -i 'base environment'`
      
-    For example, if entering that command gives this output: `base environment : /opt/miniconda3 (writable)` then you would edit the line in the  perox-per-cell-macos.sh file to read
+    For example, if entering that command gives this output: `base environment : /opt/miniconda3 (writable)` then you would edit the line in the  feature-per-cell-macos.sh file to read
    
     `source /opt/miniconda3/etc/profile.d/conda.sh`
 
- 6) Start using perox-per-cell
+ 6) Start using feature-per-cell
 
     Installation of the necessary files is complete and now the program can be executed.
     
-    In a Terminal, run the perox-per-cell program by `cd`’ing to its location, then entering the command
+    In a Terminal, run the feature-per-cell program by `cd`’ing to its location, then entering the command
     `./perox_per_cell_macos.sh`
 
     You may need to adjust the permissions on the file to make it executable, e.g., `chmod +x perox_per_cell_macos.sh`
@@ -119,10 +119,10 @@ Most of this will be done using commands entered in the Terminal app. Open it by
 ### On Linux
 Currently, a standalone executable for Linux is not available, but initial versions of the software have been successfully tested on a Windows Subsystem for Linux (WSL v1) running Ubuntu 22.04 using the steps below. These are generally similar to the installation/execution steps for Mac OS X (above). To summarize:
 
-1) Download the perox-per-cell repository and the [RCNN weights file](https://zenodo.org/record/3598690/files/weights.zip)
+1) Download the feature-per-cell repository and the [RCNN weights file](https://zenodo.org/record/3598690/files/weights.zip)
 2) Ensure Java is installed and the JAVA_HOME environment variable is set
 3) Ensure that Conda is installed
-4) Use the YAML files in the perox-per-cell repository to create the two Conda environments needed for segmenting peroxisomes and cells. Use the Linux-specific YAML files:
+4) Use the YAML files in the feature-per-cell repository to create the two Conda environments needed for segmenting peroxisomes and cells. Use the Linux-specific YAML files:
    - Enter this command to create the environment for segmenting peroxisomes: `conda env create -f linux_environment_pseg.yml`
    - Enter this command to create the environment for segmenting cells: `conda env create -f linux_environment_cseg.yml`
 5) Edit the `perox_per_cell_linux.sh` file to ensure conda is sourced correctly on execution (see Mac OS X instructions for more details)
