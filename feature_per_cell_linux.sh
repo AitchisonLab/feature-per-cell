@@ -1,6 +1,6 @@
 #!/bin/bash
  
-echo "Loading perox-per-cell..."
+echo "Loading feature-per-cell..."
 SCRIPTDIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 
 # Source conda, otherwise conda init error messages may appear. If needed, edit the
@@ -14,12 +14,12 @@ while [ $continue -gt 0 ]
 
 do
         # Activate virtual python environment for peroxisome segmentation
-		echo "Loading environment for peroxisome segmentation"
+		echo "Loading environment for subcellular structure segmentation"
 
         conda activate pseg
 
         # Make z-projections and get peroxisome masks
-        python zproject_get_perox_masks.py "$SCRIPTDIR"/
+        python zproject_get_subcellfeat_masks.py "$SCRIPTDIR"/
 
         # Deactivate python 3.10.0 environment
         conda deactivate
