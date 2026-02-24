@@ -1,9 +1,9 @@
 # feature-per-cell
-Automated quantification of peroxisome characteristics from fluorescence microscopy images.
+Automated quantification of subcellular features from fluorescence microscopy images.
 
 [The peer-reviewed paper describing the software is available here.](https://doi.org/10.1093/bioinformatics/btae442.)
 #### Citation:
-Neal ML, Shukla N, Mast FD, Farré JC, Pacio TM, Raney-Plourde KE, Prasad S, Subramani S, Aitchison JD. Automated, image-based quantification of peroxisome characteristics with feature-per-cell. Bioinformatics. 2024 Jul 13;40(7):btae442.
+Neal ML, Shukla N, Mast FD, Farré JC, Pacio TM, Raney-Plourde KE, Prasad S, Subramani S, Aitchison JD. Automated, image-based quantification of peroxisome characteristics with perox-per-cell. Bioinformatics. 2024 Jul 13;40(7):btae442.
 
 
 ## Table of Contents
@@ -20,12 +20,12 @@ Neal ML, Shukla N, Mast FD, Farré JC, Pacio TM, Raney-Plourde KE, Prasad S, Sub
 
 
 ## SCOPE
-This program processes microscopy files to quantify the number of peroxisomes per yeast cell, cell and peroxisome areas, cytosolic peroxisomal signal intensities, as well as other features.
-It expects the input file to include two channels: the first should contain fluoresence microscopy images of GFP-tagged peroxisomal markers in a Z-stack, the second channel should contain fluorescence images of the same Z-stack but capturing whole cells stained with calcofluor white. 
+This program processes microscopy files to quantify the number of subcellular features per yeast cell, cell and feature areas, cytosolic signal intensities outside subcellular features, as well as other biological characteristics. It was originally developed to capture characteristics of peroxisomes, but can be applied to other subcellular structures.
+It expects the input file to include two channels: the first should contain fluoresence microscopy images of GFP-tagged subcellular markers in a Z-stack, the second channel should contain fluorescence images of the same Z-stack but capturing whole cells stained with calcofluor white. 
 
 While the software has primarily been tested using Zeiss Vision Image (.zvi) files, other imaging formats such as TIFF files can also be used. Furthermore, Z-stacks are not required: 2D images can also be used for both channels. 
 
-The program first generates intensity projections for both channels. Working from the resulting 2D images,it then segments peroxisomes using the [Allen Cell and Structure Segmenter](https://www.allencell.org/segmenter.html) and then segments whole cells using a neural network-based method named [YeastSpotter](https://github.com/alexxijielu/yeast_segmentation). For each individual cell identified in the latter step, the program determines the number of unique peroxisome objects contained within that cell's boundary using output from the former step. It also computes the cell's physical area based on pixel resolution in the input file metadata as well as the total cytosolic (i.e., non-peroxisomal) signal present in the GFP channel. The program uses data from the maximal intensity projection of the GFP channel to quantify the cytosolic signal. The program excludes cells that lie on the image border.
+The program first generates intensity projections for both channels. Working from the resulting 2D images,it then segments subcellular structures using the [Allen Cell and Structure Segmenter](https://www.allencell.org/segmenter.html) and then segments whole cells using a neural network-based method called [YeastSpotter](https://github.com/alexxijielu/yeast_segmentation). For each individual cell identified in the latter step, the program determines the number of unique subcellular objects contained within that cell's boundary using output from the former step. It also computes the cell's physical area based on pixel resolution in the input file metadata as well as the total cytosolic signal (i.e., the signal outside of segmented subcellular features) present in the GFP channel. The program uses data from the maximal intensity projection of the GFP channel to quantify the cytosolic signal. The program excludes cells that lie on the image border.
 
 ## PREREQUISITES
 The program requires that you have Java installed.
@@ -44,11 +44,11 @@ Please keep all program files where they are in the downloaded repository. Other
 
 ### On Windows
 1) Download and extract one of the feature-per-cell Windows executable package ZIPs under [Releases](https://github.com/AitchisonLab/feature-per-cell/releases).
-2) Double-click the extracted perox_per_cell.bat file. This will open a command prompt and the feature-per-cell GUI. It may take a few seconds to load.
+2) Double-click the extracted feature_per_cell.bat file. This will open a command prompt and the feature-per-cell GUI. It may take a few seconds to load.
 3) Select an imaging file to process by pressing the "Select" button. You can choose to batch process all files in the image's folder by checking the "Process all files in directory" checkbutton.
 4) If needed, edit the values for parameters in the GUI
-    - The first sets the sensitivity of peroxisome detection (lower is more sensitive). Default is 0.0064.
-    - The second sets the minimum size, in pixels, for a peroxisome to be counted. Default is 1.
+    - The first sets the sensitivity of subcellular feature detection (lower is more sensitive). Default is 0.0064.
+    - The second sets the minimum size, in pixels, for a subcellular feature to be counted. Default is 1.
     - The third should be set to one less than the maximum possible pixel intensity value for the input image. In other words, 2^(bit depth of input image) - 1. Default is 16383.
     - The fourth sets the cell segmentation method to use. Default is YeastSpotter (validated on images of yeast). The alternative is CellPose (validated on images of various cell types).
     - The fifth sets the minimum size, in pixels, for a segmented cell to be counted. Default is 1.
@@ -81,13 +81,13 @@ Most of this will be done using commands entered in the Terminal app. Open it by
     In either case, restart your shell after entering the command.
    
  3) Next, ensure that Conda is installed. Conda is a tool for managing virtual Python environments. See [this website](https://docs.conda.io/projects/conda/en/stable/user-guide/install/index.html) for instructions on installing conda. Be sure to download the version that works for your processor (x86_64 or M1 Silicon)
- 4) Using Conda, set up two virtual Python environments - one is used for segmenting peroxisomes, the other for cells.
+ 4) Using Conda, set up two virtual Python environments - one is used for segmenting subcellular structures, the other for cells.
     
-    First, set up the environment for segmenting peroxisomes. Using the Terminal, `cd` to your downloaded feature-per-cell repository directory using the command
+    First, set up the environment for segmenting subcellualr structures. Using the Terminal, `cd` to your downloaded feature-per-cell repository directory using the command
     
     `cd [path to downloaded repository]`
     
-    Next, enter one of the following commands in a terminal to create the Conda environment for peroxisome segmentation (this may take several minutes to complete because it will install a number of dependencies) 
+    Next, enter one of the following commands in a terminal to create the Conda environment for subcellular structure segmentation (this may take several minutes to complete because it will install a number of dependencies) 
 
     - For users with M1 Silicon processors (arm64 architecture): `CONDA_SUBDIR=osx-64 conda env create -f mac_environment_pseg.yml`
 
@@ -99,7 +99,7 @@ Most of this will be done using commands entered in the Terminal app. Open it by
     
     - For users with x86_64 processors: `conda env create -f mac_environment_cseg.yml`
 
- 5) Open the perox_per_cell_macos.sh file in an editor and edit the line in the script that starts with “source” so that it points to your conda.sh file. (You only need to do this once, not each time you run the script.) If needed, you can get the directory containing the conda.sh file using the command.
+ 5) Open the feature_per_cell_macos.sh file in an editor and edit the line in the script that starts with “source” so that it points to your conda.sh file. (You only need to do this once, not each time you run the script.) If needed, you can get the directory containing the conda.sh file using the command.
 
     `conda info | grep -i 'base environment'`
      
@@ -112,7 +112,7 @@ Most of this will be done using commands entered in the Terminal app. Open it by
     Installation of the necessary files is complete and now the program can be executed.
     
     In a Terminal, run the feature-per-cell program by `cd`’ing to its location, then entering the command
-    `./perox_per_cell_macos.sh`
+    `./feature_per_cell_macos.sh`
 
     You may need to adjust the permissions on the file to make it executable, e.g., `chmod +x perox_per_cell_macos.sh`
 
@@ -122,11 +122,11 @@ Currently, a standalone executable for Linux is not available, but initial versi
 1) Download the feature-per-cell repository and the [RCNN weights file](https://zenodo.org/record/3598690/files/weights.zip)
 2) Ensure Java is installed and the JAVA_HOME environment variable is set
 3) Ensure that Conda is installed
-4) Use the YAML files in the feature-per-cell repository to create the two Conda environments needed for segmenting peroxisomes and cells. Use the Linux-specific YAML files:
-   - Enter this command to create the environment for segmenting peroxisomes: `conda env create -f linux_environment_pseg.yml`
+4) Use the YAML files in the feature-per-cell repository to create the two Conda environments needed for segmenting subcellular structures and cells. Use the Linux-specific YAML files:
+   - Enter this command to create the environment for segmenting subcellular structures: `conda env create -f linux_environment_pseg.yml`
    - Enter this command to create the environment for segmenting cells: `conda env create -f linux_environment_cseg.yml`
-5) Edit the `perox_per_cell_linux.sh` file to ensure conda is sourced correctly on execution (see Mac OS X instructions for more details)
-6) Execute the `perox_per_cell_linux.sh` file.
+5) Edit the `feature_per_cell_linux.sh` file to ensure conda is sourced correctly on execution (see Mac OS X instructions for more details)
+6) Execute the `feature_per_cell_linux.sh` file.
 
 More details on each of these steps can be found in the Mac OS X installation/execution instructions above.
 
@@ -136,11 +136,11 @@ More details on each of these steps can be found in the Mac OS X installation/ex
 ## OUTPUT
 The program outputs an Excel spreadsheet in the same directory as the input imaging file. The spreadsheet contains three worksheets:
 
-- **ByCell**: lists each unique cell, the number of peroxisomes it contains, its area, the cumulative area of all peroxisomes in the cell and peroxisomal marker signal intensities (total and cytosolic).
+- **ByCell**: lists each unique cell, the number of subcellular features it contains, its area, the cumulative area of all subcellular features in the cell and marker signal intensities (total and cytosolic) for the subcellular feature.
 
-- **ByPeroxisome**: lists each unique peroxisome's area and signal intensity as well as metrics for the cell that contained it (some are repeated in the "ByCell" worksheet)
+- **BySubcellularFeature**: lists each unique subcelluar feature's area and signal intensity as well as metrics for the cell that contained it (some are repeated in the "ByCell" worksheet)
 			  
-- **OtherStats**: lists other statistics that may be useful such as the number of peroxisomes detected outside of cell boundaries. Also stores the software version ID.
+- **OtherStats**: lists other statistics that may be useful such as the number of subcellular features detected outside of cell boundaries. Also stores the software version ID.
 			  
 The program also stores the intensity projection files and the segmentation masks in folders contained in the same directory as the input imaging file.
 
