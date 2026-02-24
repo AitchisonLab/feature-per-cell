@@ -82,7 +82,7 @@ ByCell: lists each unique cell, the number of subcellular features it contains, 
               area of all subcellular features in the cell and feature marker signal intensities 
 			  (total and cytosolic).
 
-ByPeroxisome: lists each unique subcellular feature's area and signal intensity as well as metrics for the
+BySubcellularFeature: lists each unique subcellular feature's area and signal intensity as well as metrics for the
               cell that contained it (some are repeated in the "ByCell" worksheet)
 			  
 OtherStats: lists other statistics that may be useful such as the number of subcellular features detected
